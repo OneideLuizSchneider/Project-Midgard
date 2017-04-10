@@ -5,18 +5,20 @@ interface
 uses
   Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.AppEvnts, Vcl.StdCtrls, IdHTTPWebBrokerBridge, Web.HTTPApp;
+  Vcl.AppEvnts, Vcl.StdCtrls, IdHTTPWebBrokerBridge, Web.HTTPApp,
+  RESTFull.Standalone.Server,
+  Spring.Container.Common;
 
 type
-  TForm1 = class(TForm)
+  TMainView = class(TForm)
   private
     { Private declarations }
   public
-    { Public declarations }
+
   end;
 
 var
-  Form1: TForm1;
+  MainView: TMainView;
 
 implementation
 

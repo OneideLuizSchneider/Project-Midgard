@@ -1,3 +1,4 @@
-inherited MidgardBaseDataModule1: TMidgardBaseDataModule1
+inherited RESTFullStandaloneServer: TRESTFullStandaloneServer
+  OldCreateOrder = True
   OnCreate = DataModuleCreate
 end

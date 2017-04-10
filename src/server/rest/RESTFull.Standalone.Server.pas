@@ -3,44 +3,39 @@ unit RESTFull.Standalone.Server;
 interface
 
 uses
-  System.SysUtils, System.Classes, Midgard.Base.Data.Module;
+  System.SysUtils, System.Classes, Midgard.Base.Data.Module,
+  MVCFramework.Server,
+  MVCFramework.Server.Impl;
 
 type
-  TMidgardBaseDataModule1 = class(TMidgardBaseDataModule)
+  TRESTFullStandaloneServer = class(TMidgardBaseDataModule)
     procedure DataModuleCreate(Sender: TObject);
   private
-    { Private declarations }
+   FServerListenerCtx: IMVCListenersContext;
   public
-    { Public declarations }
   end;
-
 
 implementation
 
 uses
-  MVCFramework.Server,
-  MVCFramework.Server.Impl,
   RESTFull.Web.Module;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
 
-procedure TMidgardBaseDataModule1.DataModuleCreate(Sender: TObject);
-var
-  vServerListenerCtx: IMVCListenersContext;
+procedure TRESTFullStandaloneServer.DataModuleCreate(Sender: TObject);
 begin
   inherited;
-  vServerListenerCtx := TMVCListenersContext.Create;
-  vServerListenerCtx.Add(TMVCListenerProperties.New
+  FServerListenerCtx := TMVCListenersContext.Create;
+  FServerListenerCtx.Add(TMVCListenerProperties.New
      .SetName('RESTFullStandalone')
-     .SetPort(8080)
+     .SetPort(5000)
      .SetMaxConnections(1024)
      .SetWebModuleClass(RESTFullWebModuleClass)
    );
 
-  vServerListenerCtx.StartAll;
-
+  FServerListenerCtx.StartAll;
 end;
 
 end.
