@@ -57,13 +57,13 @@ begin
           if (rttiType.IsInstance) and (rttiType.HasCustomAttribute<MVCPathAttribute>) then
             FControllers.AddOrSetValue(rttiType.AsClass.MetaclassType.QualifiedClassName,
               TRESTFullControllerItem.Create(TRESTFullControllerClass(rttiType.AsClass.MetaclassType),
-              function: TMVCController
-              begin
-                Result := ServiceLocator.GetService(rttiType.AsClass.Handle).AsType<TMVCController>;
-              end
+                function: TMVCController
+                begin
+                  Result := ServiceLocator.GetService(rttiType.AsClass.Handle).AsType<TMVCController>;
+                end
               ));
         end
-        );
+      );
     finally
       FCriticalSection.Leave;
     end;

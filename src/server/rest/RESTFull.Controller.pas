@@ -24,7 +24,8 @@ type
   TRESTFullControllerClass = class of TRESTFullController;
 
   TCrudController<TEntity, TDTO: class, constructor; TKey; IRepository: ICrudRepository<TEntity, TKey>; IService: ICrudService < TEntity, TKey, IRepository >> = class(TRESTFullController)
-  strict private fService: IService;
+  strict private
+    FService: IService;
     FConverter:
     IRESTFullConverter<TEntity, TDTO, TKey>;
     FCriticalSection:
@@ -75,8 +76,7 @@ var
 begin
   GetCriticalSection.Enter;
   try
-    entity := GetService.FindOne
-      (TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
+    entity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
     if (entity <> nil) then
     begin
       try
@@ -103,8 +103,7 @@ var
 begin
   GetCriticalSection.Enter;
   try
-    entity := GetService.FindOne
-      (TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
+    entity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
     if (entity <> nil) then
     begin
       try
@@ -140,35 +139,35 @@ end;
 function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
   GetConverter: IRESTFullConverter<TEntity, TDTO, TKey>;
 begin
-  Result := fConverter;
+  Result := FConverter;
 end;
 
 function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
   GetCriticalSection: ICriticalSection;
 begin
-  Result := fCriticalSection;
+  Result := FCriticalSection;
 end;
 
 function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.GetService
   : IService;
 begin
-  Result := fService;
+  Result := FService;
 end;
 
 procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
   MVCControllerAfterCreate;
 begin
   inherited MVCControllerAfterCreate;
-  fService := ServiceLocator.GetService<IService>;
-  fConverter := ServiceLocator.GetService<IRESTFullConverter<TEntity, TDTO, TKey>>;
-  fCriticalSection := ServiceLocator.GetService<ICriticalSection>;
+  FService := ServiceLocator.GetService<IService>;
+  FConverter := ServiceLocator.GetService<IRESTFullConverter<TEntity, TDTO, TKey>>;
+  FCriticalSection := ServiceLocator.GetService<ICriticalSection>;
 end;
 
 procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
   MVCControllerBeforeDestroy;
 begin
-  fService := nil;
-  fConverter := nil;
+  FService := nil;
+  FConverter := nil;
   inherited MVCControllerBeforeDestroy;
 end;
 
@@ -213,8 +212,7 @@ var
 begin
   GetCriticalSection.Enter;
   try
-    entity := GetService.FindOne
-      (TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
+    entity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
     if (entity <> nil) then
     begin
       try

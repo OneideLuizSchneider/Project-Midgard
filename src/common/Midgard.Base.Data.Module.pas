@@ -13,9 +13,6 @@ type
     { Public declarations }
   end;
 
-var
-  MidgardBaseDataModule: TMidgardBaseDataModule;
-
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
