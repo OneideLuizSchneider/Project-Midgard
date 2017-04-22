@@ -9,7 +9,7 @@ uses
 
 type
 
-  TCriticalSection = class(TInterfacedObject, ICriticalSection)
+  TMidgardCriticalSection = class(TInterfacedObject, ICriticalSection)
   strict private
     FInternal: TCriticalSection;
   strict protected
@@ -23,25 +23,25 @@ type
 
 implementation
 
-{ TCriticalSection }
+{ TMidgardCriticalSection }
 
-constructor TCriticalSection.Create;
+constructor TMidgardCriticalSection.Create;
 begin
   FInternal := TCriticalSection.Create;
 end;
 
-destructor TCriticalSection.Destroy;
+destructor TMidgardCriticalSection.Destroy;
 begin
   FInternal.Free;
   inherited;
 end;
 
-procedure TCriticalSection.Enter;
+procedure TMidgardCriticalSection.Enter;
 begin
   FInternal.Enter;
 end;
 
-procedure TCriticalSection.Leave;
+procedure TMidgardCriticalSection.Leave;
 begin
   FInternal.Leave;
 end;

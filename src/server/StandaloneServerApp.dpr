@@ -35,11 +35,12 @@ uses
 begin
   ReportMemoryLeaksOnShutdown := True;
 
-  RESTFullContext.RegisterTypes(GlobalContainer);
   ViewContext.RegisterTypes(GlobalContainer);
   CoreContext.RegisterTypes(GlobalContainer);
   PersistenceContext.RegisterTypes(GlobalContainer);
   BusinessContext.RegisterTypes(GlobalContainer);
+
+    RESTFullContext.RegisterTypes(GlobalContainer);
 
   Application.Initialize;
 

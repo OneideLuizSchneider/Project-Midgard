@@ -43,7 +43,7 @@ begin
     begin
       FEngine.AddController(controllerItem.Value.ControllerClass, controllerItem.Value.Delegate);
     end
-  );
+    );
 end;
 
 procedure TRESTFullWebModule.WebModuleCreate(Sender: TObject);

@@ -26,15 +26,17 @@ type
     property ControllerClass: TRESTFullControllerClass read GetControllerClass;
     property Delegate: TMVCControllerDelegate read GetDelegate;
   public
-    constructor Create(const controllerClass: TRESTFullControllerClass; const delegate: TMVCControllerDelegate);
+    constructor Create(const ControllerClass: TRESTFullControllerClass;
+      const Delegate: TMVCControllerDelegate);
   end;
 
   TRESTFullContainer = class(TInterfacedObject, IRESTFullContainer)
-  strict private
-    FControllers: IDictionary<string, IRESTFullControllerItem>;
+  private
     [Inject]
     FCriticalSection: ICriticalSection;
-  strict protected
+
+    FControllers: IDictionary<string, IRESTFullControllerItem>;
+  protected
     function Controllers(): IDictionary<string, IRESTFullControllerItem>;
   public
     constructor Create;
@@ -44,26 +46,30 @@ implementation
 
 { TRESTFullContainer }
 
-function TRESTFullContainer.Controllers: IDictionary<string, IRESTFullControllerItem>;
+function TRESTFullContainer.Controllers
+  : IDictionary<string, IRESTFullControllerItem>;
 begin
   if (FControllers = nil) then
   begin
     FCriticalSection.Enter;
     try
-      FControllers := TCollections.CreateDictionary<string, IRESTfullControllerItem>;
+      FControllers := TCollections.CreateDictionary<string,
+        IRESTFullControllerItem>;
       TType.GetTypes.ForEach(
         procedure(const rttiType: TRttiType)
         begin
-          if (rttiType.IsInstance) and (rttiType.HasCustomAttribute<MVCPathAttribute>) then
-            FControllers.AddOrSetValue(rttiType.AsClass.MetaclassType.QualifiedClassName,
-              TRESTFullControllerItem.Create(TRESTFullControllerClass(rttiType.AsClass.MetaclassType),
-                function: TMVCController
-                begin
-                  Result := ServiceLocator.GetService(rttiType.AsClass.Handle).AsType<TMVCController>;
-                end
-              ));
-        end
-      );
+          if (rttiType.IsInstance) and
+            (rttiType.HasCustomAttribute<MVCPathAttribute>) then
+            FControllers.AddOrSetValue
+              (rttiType.AsClass.MetaclassType.QualifiedClassName,
+              TRESTFullControllerItem.Create(TRESTFullControllerClass
+              (rttiType.AsClass.MetaclassType),
+              function: TMVCController
+              begin
+                Result := ServiceLocator.GetService(rttiType.AsClass.Handle)
+                  .AsType<TMVCController>;
+              end));
+        end);
     finally
       FCriticalSection.Leave;
     end;
@@ -78,10 +84,11 @@ end;
 
 { TRESTFullControllerItem }
 
-constructor TRESTFullControllerItem.Create(const controllerClass: TRESTFullControllerClass; const delegate: TMVCControllerDelegate);
+constructor TRESTFullControllerItem.Create(const ControllerClass
+  : TRESTFullControllerClass; const Delegate: TMVCControllerDelegate);
 begin
-  FControllerClass := controllerClass;
-  FDelegate := delegate;
+  FControllerClass := ControllerClass;
+  FDelegate := Delegate;
 end;
 
 function TRESTFullControllerItem.GetControllerClass: TRESTFullControllerClass;

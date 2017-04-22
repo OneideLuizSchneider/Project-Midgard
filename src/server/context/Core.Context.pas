@@ -17,7 +17,7 @@ uses
 
 class procedure CoreContext.RegisterTypes(const container: TContainer);
 begin
-  container.RegisterType<ICriticalSection, TCriticalSection>.AsSingleton;
+  container.RegisterType<ICriticalSection, TMidgardCriticalSection>.AsSingleton;
 
   container.Build;
 end;
