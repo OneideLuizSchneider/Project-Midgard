@@ -3,3 +3,4 @@
 /src/server/*.local
 /src/server/*.skincfg
 __history
+*.local

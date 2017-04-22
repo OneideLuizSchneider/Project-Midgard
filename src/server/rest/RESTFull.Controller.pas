@@ -29,14 +29,14 @@ type
     FConverter:
     IRESTFullConverter<TEntity, TDTO, TKey>;
     FCriticalSection:
-    ICriticalSection;
+    IMidgardCriticalSection;
   strict protected
     procedure MVCControllerAfterCreate; override;
     procedure MVCControllerBeforeDestroy; override;
 
     function GetService: IService;
     function GetConverter: IRESTFullConverter<TEntity, TDTO, TKey>;
-    function GetCriticalSection: ICriticalSection;
+    function GetCriticalSection: IMidgardCriticalSection;
   public
     [MVCPath('/($id)')]
     [MVCHTTPMethod([httpGET])]
@@ -143,7 +143,7 @@ begin
 end;
 
 function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
-  GetCriticalSection: ICriticalSection;
+  GetCriticalSection: IMidgardCriticalSection;
 begin
   Result := FCriticalSection;
 end;
@@ -160,7 +160,7 @@ begin
   inherited MVCControllerAfterCreate;
   FService := ServiceLocator.GetService<IService>;
   FConverter := ServiceLocator.GetService<IRESTFullConverter<TEntity, TDTO, TKey>>;
-  FCriticalSection := ServiceLocator.GetService<ICriticalSection>;
+  FCriticalSection := ServiceLocator.GetService<IMidgardCriticalSection>;
 end;
 
 procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.

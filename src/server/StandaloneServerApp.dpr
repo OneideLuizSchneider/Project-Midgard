@@ -39,8 +39,7 @@ begin
   CoreContext.RegisterTypes(GlobalContainer);
   PersistenceContext.RegisterTypes(GlobalContainer);
   BusinessContext.RegisterTypes(GlobalContainer);
-
-    RESTFullContext.RegisterTypes(GlobalContainer);
+  RESTFullContext.RegisterTypes(GlobalContainer);
 
   Application.Initialize;
 

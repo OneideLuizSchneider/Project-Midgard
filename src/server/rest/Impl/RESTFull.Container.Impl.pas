@@ -33,7 +33,7 @@ type
   TRESTFullContainer = class(TInterfacedObject, IRESTFullContainer)
   private
     [Inject]
-    FCriticalSection: ICriticalSection;
+    FCriticalSection: IMidgardCriticalSection;
 
     FControllers: IDictionary<string, IRESTFullControllerItem>;
   protected

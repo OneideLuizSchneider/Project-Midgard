@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{50829CC9-43A9-4608-95D9-1CFF2CFD6F48}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="server\StandaloneServerApp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="server\Test\StandaloneServerAppTests.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="client\Client.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="StandaloneServerApp">
+        <MSBuild Projects="server\StandaloneServerApp.dproj"/>
+    </Target>
+    <Target Name="StandaloneServerApp:Clean">
+        <MSBuild Projects="server\StandaloneServerApp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="StandaloneServerApp:Make">
+        <MSBuild Projects="server\StandaloneServerApp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="StandaloneServerAppTests">
+        <MSBuild Projects="server\Test\StandaloneServerAppTests.dproj"/>
+    </Target>
+    <Target Name="StandaloneServerAppTests:Clean">
+        <MSBuild Projects="server\Test\StandaloneServerAppTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="StandaloneServerAppTests:Make">
+        <MSBuild Projects="server\Test\StandaloneServerAppTests.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Client">
+        <MSBuild Projects="client\Client.dproj"/>
+    </Target>
+    <Target Name="Client:Clean">
+        <MSBuild Projects="client\Client.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Client:Make">
+        <MSBuild Projects="client\Client.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="StandaloneServerApp;StandaloneServerAppTests;Client"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="StandaloneServerApp:Clean;StandaloneServerAppTests:Clean;Client:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="StandaloneServerApp:Make;StandaloneServerAppTests:Make;Client:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -9,7 +9,7 @@ uses
 
 type
 
-  TMidgardCriticalSection = class(TInterfacedObject, ICriticalSection)
+  TMidgardCriticalSection = class(TInterfacedObject, IMidgardCriticalSection)
   strict private
     FInternal: TCriticalSection;
   strict protected
