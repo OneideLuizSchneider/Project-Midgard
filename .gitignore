@@ -4,3 +4,7 @@
 /src/server/*.skincfg
 __history
 *.local
+*.identcache
+*.res
+*.skincfg
+*.stat
