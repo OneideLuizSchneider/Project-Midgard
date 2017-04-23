@@ -1,0 +1,32 @@
+Script create DB and tables
+
+--------
+create database
+--------
+
+CREATE DATABASE midgard
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+--------
+Table pessoa
+--------
+
+CREATE TABLE public.pessoa
+(
+    id integer NOT NULL DEFAULT nextval('pessoa_id_seq'::regclass),
+    nome character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    cpfcnpj character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pessoa_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.pessoa OWNER to postgres;

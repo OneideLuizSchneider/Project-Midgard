@@ -69,24 +69,23 @@ implementation
 
 { TCrudController<TEntity, TKey, TDTO, IService> }
 
-procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.Delete
-  (ctx: TWebContext);
+procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.Delete(ctx: TWebContext);
 var
-  entity: TEntity;
+  vEntity: TEntity;
 begin
   GetCriticalSection.Enter;
   try
-    entity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
-    if (entity <> nil) then
+    vEntity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
+    if (vEntity <> nil) then
     begin
       try
-        Self.GetService.Delete(entity);
+        Self.GetService.Delete(vEntity);
 
         ctx.Response.RawWebResponse.Content := '';
         ctx.Response.StatusCode := HTTP_STATUS.NoContent;
         ctx.Response.ReasonString := 'No Content';
       finally
-        entity.Free;
+        vEntity.Free;
       end;
     end
     else
@@ -96,20 +95,19 @@ begin
   end;
 end;
 
-procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.FindOne
-  (ctx: TWebContext);
+procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.FindOne(ctx: TWebContext);
 var
-  entity: TEntity;
+  vEntity: TEntity;
 begin
   GetCriticalSection.Enter;
   try
-    entity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
-    if (entity <> nil) then
+    vEntity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
+    if (vEntity <> nil) then
     begin
       try
-        Self.Render(GetConverter.AsDTO(entity));
+        Self.Render(GetConverter.AsDTO(vEntity));
       finally
-        entity.Free;
+        vEntity.Free;
       end;
     end
     else
@@ -119,16 +117,15 @@ begin
   end;
 end;
 
-procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.FindAll
-  (ctx: TWebContext);
+procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.FindAll(ctx: TWebContext);
 var
-  entities: IList<TEntity>;
+  vEntities: IList<TEntity>;
 begin
   GetCriticalSection.Enter;
   try
-    entities := GetService.FindAll;
-    if (entities <> nil) and (entities.Count > 0) then
-      Self.Render<TDTO>(GetConverter.AsDTOs(entities))
+    vEntities := GetService.FindAll;
+    if (vEntities <> nil) and (vEntities.Count > 0) then
+      Self.Render<TDTO>(GetConverter.AsDTOs(vEntities))
     else
       Self.Render(HTTP_STATUS.NoContent, 'No Content');
   finally
@@ -136,26 +133,22 @@ begin
   end;
 end;
 
-function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
-  GetConverter: IRESTFullConverter<TEntity, TDTO, TKey>;
+function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.GetConverter: IRESTFullConverter<TEntity, TDTO, TKey>;
 begin
   Result := FConverter;
 end;
 
-function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
-  GetCriticalSection: IMidgardCriticalSection;
+function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.GetCriticalSection: IMidgardCriticalSection;
 begin
   Result := FCriticalSection;
 end;
 
-function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.GetService
-  : IService;
+function TCrudController<TEntity, TDTO, TKey, IRepository, IService>.GetService: IService;
 begin
   Result := FService;
 end;
 
-procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
-  MVCControllerAfterCreate;
+procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.MVCControllerAfterCreate;
 begin
   inherited MVCControllerAfterCreate;
   FService := ServiceLocator.GetService<IService>;
@@ -163,73 +156,70 @@ begin
   FCriticalSection := ServiceLocator.GetService<IMidgardCriticalSection>;
 end;
 
-procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.
-  MVCControllerBeforeDestroy;
+procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.MVCControllerBeforeDestroy;
 begin
   FService := nil;
   FConverter := nil;
   inherited MVCControllerBeforeDestroy;
 end;
 
-procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.Insert
-  (ctx: TWebContext);
+procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.Insert(ctx: TWebContext);
 var
-  dto: TDTO;
-  entity: TEntity;
-  id: string;
+  vDto: TDTO;
+  vEntity: TEntity;
+  vId: string;
 begin
   GetCriticalSection.Enter;
   try
-    dto := ctx.Request.BodyAs<TDTO>;
+    vDto := ctx.Request.BodyAs<TDTO>;
     try
-      entity := GetConverter.AsEntity(dto);
+      vEntity := GetConverter.AsEntity(vDto);
       try
-        entity := Self.GetService.Save(entity);
+        vEntity := Self.GetService.Save(vEntity);
 
-        id := TValue.From<TKey>(GetConverter.KeyValue(entity)).ToString;
+        vId := TValue.From<TKey>(GetConverter.KeyValue(vEntity)).ToString;
 
-        ctx.Response.RawWebResponse.Content := id;
-        ctx.Response.Location := ctx.Request.PathInfo + '/' + id;
+        ctx.Response.RawWebResponse.Content := vId;
+        ctx.Response.Location := ctx.Request.PathInfo + '/' + vId;
 
         ctx.Response.StatusCode := HTTP_STATUS.Created;
         ctx.Response.ReasonString := 'Created';
       finally
-        entity.Free;
+        vEntity.Free;
       end;
     finally
-      dto.Free;
+      vDto.Free;
     end;
   finally
     GetCriticalSection.Leave;
   end;
 end;
 
-procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.Update
-  (ctx: TWebContext);
+procedure TCrudController<TEntity, TDTO, TKey, IRepository, IService>.Update(ctx: TWebContext);
 var
-  entity: TEntity;
-  dto: TDTO;
+  vEntity: TEntity;
+  vDto: TDTO;
 begin
   GetCriticalSection.Enter;
   try
-    entity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
-    if (entity <> nil) then
+    vEntity := GetService.FindOne(TValue.From<Int64>(ctx.Request.Params['id'].ToInt64).AsType<TKey>);
+    if (vEntity <> nil) then
     begin
       try
-        dto := ctx.Request.BodyAs<TDTO>;
+        vDto := ctx.Request.BodyAs<TDTO>;
         try
-          GetConverter.Update(dto, entity);
+          GetConverter.Update(vDto, vEntity);
 
-          Self.GetService.Save(entity);
+          Self.GetService.Save(vEntity);
 
           ctx.Response.RawWebResponse.Content := '';
           ctx.Response.StatusCode := HTTP_STATUS.NoContent;
           ctx.Response.ReasonString := 'No Content';
         finally
-          dto.Free;
+          vDto.Free;
         end;
       finally
-        entity.Free;
+        vEntity.Free;
       end;
     end
     else
