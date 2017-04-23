@@ -102,9 +102,49 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="view\Main.View.pas">
-            <Form>Form4</Form>
+            <Form>MainView</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="view\Pessoa.View.pas">
+            <Form>PessoaView</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="context\View.Context.pas"/>
+        <DCCReference Include="context\RESTFullClient.Context.pas"/>
+        <DCCReference Include="..\common\Midgard.Base.View.pas">
+            <Form>MidgardBaseView</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\common\Midgard.Base.Data.Module.pas">
+            <Form>MidgardBaseDataModule</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="common\Midgard.Base.Client.View.pas">
+            <Form>BaseClientView</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\server\rest\dtos\Pessoa.DTO.pas"/>
+        <DCCReference Include="common\Midgard.Base.Persistence.pas">
+            <Form>MidgardBasePersistence</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="common\Midgard.Crud.Persistence.pas">
+            <Form>MidgardCrudPersistence</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="persistence\Pessoa.Persistence.pas">
+            <Form>PessoaPersistence</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="context\Persistence.Context.pas"/>
+        <DCCReference Include="context\Resource.Context.pas"/>
+        <DCCReference Include="common\Midgard.Crud.Resource.pas"/>
+        <DCCReference Include="common\Impl\Midgard.Crud.Resource.Impl.pas"/>
+        <DCCReference Include="..\common\Midgard.Exceptions.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -131,7 +171,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="Win32\Debug\Client.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\output\client\Client.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Client.exe</RemoteName>
                         <Overwrite>true</Overwrite>

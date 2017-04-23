@@ -1,4 +1,4 @@
-unit TestValidateRegisterRESTControllers;
+unit TestRESTFull.Web;
 {
 
   Delphi DUnit Test Case

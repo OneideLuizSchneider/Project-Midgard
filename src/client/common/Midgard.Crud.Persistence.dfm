@@ -1,0 +1,2 @@
+inherited MidgardCrudPersistence: TMidgardCrudPersistence
+end

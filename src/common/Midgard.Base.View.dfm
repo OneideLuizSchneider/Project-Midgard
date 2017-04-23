@@ -1,9 +1,9 @@
-object MainView: TMainView
-  Left = 271
-  Top = 114
-  Caption = 'RESTFull SERVER - MainView'
-  ClientHeight = 235
-  ClientWidth = 399
+object MidgardBaseView: TMidgardBaseView
+  Left = 0
+  Top = 0
+  Caption = 'BaseView'
+  ClientHeight = 300
+  ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

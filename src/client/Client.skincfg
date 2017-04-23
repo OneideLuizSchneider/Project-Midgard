@@ -1,7 +1,7 @@
 [ExpressSkins]
-Default=1
+Default=0
 ShowNotifications=0
-Enabled=1
+Enabled=0
 dxSkinBlack=0
 dxSkinBlue=0
 dxSkinBlueprint=0
